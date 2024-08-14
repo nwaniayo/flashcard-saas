@@ -2,7 +2,7 @@ import { SignUp } from '@clerk/nextjs';
 import { Container, Typography, Button, AppBar, Toolbar, Box } from '@mui/material';
 import Link from 'next/link';
 
-export default function SignInPage() {
+export default function SignUpPage() {
     return (
         <>
             <AppBar position="static">
@@ -11,12 +11,12 @@ export default function SignInPage() {
                         Flashcard SaaS
                     </Typography>
                     <Button color="inherit">
-                        <Link href="/sign-in" passHref>
+                        <Link href="/sign-in" passHref style={{ textDecoration: 'none', color: 'white' }}>
                             Login
                         </Link>
                     </Button>
                     <Button color="inherit">
-                        <Link href="/sign-up" passHref>
+                        <Link href="/sign-up" passHref style={{ textDecoration: 'none', color: 'white' }}>
                             Sign Up
                         </Link>
                     </Button>
@@ -29,7 +29,7 @@ export default function SignInPage() {
                     justifyContent='center'
                     alignItems='center'>
 
-                    <Typography variant="h4" gu>
+                    <Typography variant="h4" gutterBottom>
                         Sign Up
                     </Typography>
                     <SignUp />

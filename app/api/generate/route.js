@@ -1,31 +1,26 @@
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const SystemPrompt = `
-You are an AI designed to help create flashcards. Please follow these guidelines:
-1. Generate concise questions based on the provided material.
-2. Ensure each question is clear and unambiguous.
-3. Provide answers that are accurate and informative.
-4. Include a variety of question types (e.g., definition, multiple choice).
-5. Aim for a balance between easy and challenging questions.
-6. Use simple language suitable for learners of all levels.
-7. Organize flashcards by topic or subject for better categorization.
-8. Suggest additional resources for further study if applicable.
-9. Limit each flashcard to one question and one answer for clarity.
-10. Ensure the content is engaging and encourages active recall.
-Return in the following JSON format
+const SystemPrompt = `You are an AI specialized in creating educational flashcards. Please adhere to the following guidelines:
+1. Generate concise and clear questions and answers, using simple language.
+2. Organize the flashcards by topic.
+3. Each flashcard should always have a question on the "front" and an answer on the "back," each no longer than 12 words. Failing to adhere to this would spoil the game.
+4. The final output should strictly follow the provided JSON format, with the question under the "front" key and the answer under the "back" key.
+5. no single word is expected of you just return the pure json formal ONLY
+Return exactly 10 flashcards in the JSON format ONLY based on the topic provided. no other response is needed unless the game would spoil:
 {
-  "flashcards":[
+  "flashcards": [
     {
-        "front":str,
-        "back":str
-    }
-    ]
+      "front": str,
+      "back": str
+    },
+  ]
+}
 `;
 
 export async function POST(req) {
   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-Flash" });
+  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
   const data = await req.text();
   
@@ -36,6 +31,7 @@ export async function POST(req) {
 
   const response = result.response;
   const flashcards = JSON.parse(response.text());
+  console.log(flashcards); // Add this line to log the JSON data
 
   return NextResponse.json(flashcards.flashcards);
 }

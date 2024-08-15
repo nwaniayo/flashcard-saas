@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import getStripe from "@/utils/get-stripe";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
 import { Button, Container, AppBar, Typography, Toolbar, Box, Grid, Link, Paper, ThemeProvider, createTheme, CssBaseline, Drawer, List, ListItem, ListItemText, Divider, IconButton } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import Head from "next/head";
@@ -38,12 +38,19 @@ const drawerWidth = 240;
 
 export default function Home() {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { isSignedIn } = useUser();
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
   };
 
   const handleSubmit = async () => {
+    if (!isSignedIn) {
+      // Redirect to sign-in page if not signed in
+      window.location.href = '/sign-in';
+      return;
+    }
+
     const checkoutSession = await fetch('/api/checkout_session', {
       method: 'POST',
       headers: {

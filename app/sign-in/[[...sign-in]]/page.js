@@ -49,9 +49,7 @@ export default function SignInPage() {
                         borderRadius: 2,
                         boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
                     }}>
-                        <Typography variant="h4" gutterBottom>
-                            Sign In
-                        </Typography>
+                        
                         <SignIn />
                     </Box>
                 </Container>

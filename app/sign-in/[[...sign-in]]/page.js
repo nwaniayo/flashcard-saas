@@ -7,9 +7,12 @@ export default function SignInPage() {
         <>
             <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                        FlashCards Gen
+                <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                    <Link href="/" passHref style={{ textDecoration: 'none', color: 'white' }}>
+                    FlashCard SaaS
+                    </Link>
                     </Typography>
+               
                     <Button color="inherit">
                         <Link href="/sign-in" passHref style={{ textDecoration: 'none', color: 'white' }}>
                             Login

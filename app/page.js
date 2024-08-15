@@ -41,9 +41,11 @@ export default function Home() {
 
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" style={{ flexGrow: 1 }}>
-            FlashCards Gen
-          </Typography>
+        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                    <Link href="/" passHref style={{ textDecoration: 'none', color: 'white' }}>
+                    FlashCard SaaS
+                    </Link>
+                    </Typography>
           <SignedOut>
             <Button color="inherit" href="/sign-in">Login</Button>
             <Button color="inherit" href="/sign-up">Sign Up</Button>
@@ -106,31 +108,7 @@ export default function Home() {
         </Typography>
         <Grid container spacing={4}>
           
-          <Grid item xs={12} sm={6}>
-            <Box
-              sx={{
-                p: 3,
-                border: '1px solid #ccc',
-                borderRadius: 2,
-                borderColor: 'grey.300',
-              }}>
-              
-              <Typography variant="h5" gutterBottom>
-                Basic
-              </Typography>
-              <Typography gutterBottom>
-                $5/month
-              </Typography>
-              <Typography gutterBottom>
-                {''}
-                Access to basic features
-              </Typography>
-              <Button variant="contained" color="primary" sx={{ mt: 2 }}>
-                Choose Basic
-              </Button>
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12}>
             <Box
               sx={{
                 p: 3,

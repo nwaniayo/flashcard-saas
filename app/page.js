@@ -64,11 +64,13 @@ export default function Home() {
           <Typography variant="h5" align="center" gutterBottom>
             The easiest way to generate flashcards from your texts
           </Typography>
-          <Button variant="contained" color="primary" sx={{ mt: 2 }}>
-            <Link href="/generate" passHref style={{ textDecoration: 'none', color: 'white' }}>
-              Get Started
-            </Link>
-          </Button>
+          <SignedIn>
+            <Button variant="contained" color="primary" sx={{ mt: 2 }}>
+              <Link href="/generate" passHref style={{ textDecoration: 'none', color: 'white' }}>
+                Get Started
+              </Link>
+            </Button>
+          </SignedIn>
         </Box>
         <Box sx={{
           textAlign: 'center',

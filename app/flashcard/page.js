@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useState, useEffect } from 'react';
 import {
   Card,
@@ -7,18 +7,17 @@ import {
   Container,
   Typography,
   CardActionArea,
-  CardContent
+  CardContent,
 } from '@mui/material';
 import { useSearchParams } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
-import { collection, doc, getDocs } from 'firebase/firestore'; // Added db import
-import { db } from '@/firebase'; // Added db import
+import { collection, doc, getDocs } from 'firebase/firestore';
+import { db } from '@/firebase';
 
 export default function Flashcard() {
   const [flashcards, setFlashCards] = useState([]);
   const [flipped, setFlipped] = useState({});
-  const { isLoaded, isSignedIn, user } = useUser(); // Corrected useUser hook usage
-
+  const { isLoaded, isSignedIn, user } = useUser();
   const searchParams = useSearchParams();
   const search = searchParams.get('id');
 
@@ -47,10 +46,10 @@ export default function Flashcard() {
   return (
     <Container maxWidth="lg">
       <Grid container spacing={4} sx={{ mt: 4 }}>
-        {flashcards.map((flashcard, index) => (
-          <Grid item xs={12} sm={6} md={4} key={flashcard.name}>
+        {flashcards.map((flashcard) => (
+          <Grid item xs={12} sm={6} md={4} key={flashcard.id}>
             <Card>
-              <CardActionArea onClick={() => handleCardClick(flashcard.name)}>
+              <CardActionArea onClick={() => handleCardClick(flashcard.id)}>
                 <CardContent>
                   <Box sx={{
                     perspective: '1000px',

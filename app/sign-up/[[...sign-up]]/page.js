@@ -9,7 +9,7 @@ export default function SignUpPage() {
                 <Toolbar>
                     <Typography variant="h6" sx={{ flexGrow: 1 }}>
                     <Link href="/" passHref style={{ textDecoration: 'none', color: 'white' }}>
-                    FlashCard SaaS
+                    FlashCards Gen
                     </Link>
                     </Typography>
                     <Button color="inherit">

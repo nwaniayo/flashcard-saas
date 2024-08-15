@@ -151,7 +151,7 @@ export default function Generate() {
             </IconButton>
             <Typography variant="h6" sx={{ flexGrow: 1 }}>
               <Link href="/" underline="none" color="inherit">
-                FlashCard SaaS
+                FlashCards Gen
               </Link>
             </Typography>
             <SignedOut>

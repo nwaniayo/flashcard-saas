@@ -163,7 +163,7 @@ export default function Home() {
               <Typography variant="h5" gutterBottom>
                 The easiest way to generate flashcards from your texts
               </Typography>
-              <SignedIn>
+              
                 <Button 
                   variant="contained" 
                   sx={{
@@ -176,12 +176,18 @@ export default function Home() {
                     padding: '10px 20px',
                     textTransform: 'none',
                   }}
-                  component={Link}
-                  href="/generate"
+                  component="button"
+                  onClick={() => {
+                    if (!isSignedIn) {
+                      window.location.href = '/sign-in';
+                    } else {
+                      window.location.href = '/generate';
+                    }
+                  }}
                 >
                   Get Started
                 </Button>
-              </SignedIn>
+              
             </Box>
 
             <Box sx={{ mb: 6 }}>

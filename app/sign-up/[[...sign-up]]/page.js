@@ -8,7 +8,7 @@ export default function SignUpPage() {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                        Flashcard SaaS
+                        FlashCards Gen
                     </Typography>
                     <Button color="inherit">
                         <Link href="/sign-in" passHref style={{ textDecoration: 'none', color: 'white' }}>

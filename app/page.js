@@ -1,21 +1,48 @@
-import Image from "next/image";
+'use client'
+
 import getStripe from "@/utils/get-stripe";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { Button, Container, AppBar, Typography, Toolbar, Box, Grid } from "@mui/material";
+import { Button, Container, AppBar, Typography, Toolbar, Box, Grid, Link } from "@mui/material";
 import Head from "next/head";
+import Stripe from "stripe";
+
 
 export default function Home() {
+
+  const handleSubmit = async ()=>{
+    const checkoutSession = await fetch ('/api/checkout_session', {
+      method: 'POST',
+      headers:{
+        origin: 'http://localhost:3000',
+      },
+    })
+    const checkoutSessionJson = await checkoutSession.json()
+    if (checkoutSession.statusCode === 500){
+      console.error(checkoutSession.message)
+      return
+    }
+
+    const stripe = await getStripe()
+    const {error} = await stripe.redirectToCheckout({
+      sessionId: checkoutSessionJson.id
+    })
+
+    if (error){
+      console.warn(error.message)
+    }
+  }
+
   return (
     <>
       <Head>
-        <title>Flashcard SaaS</title>
+        <title>FlashCards Gen </title>
         <meta name="description" content="Create flashcard from your text" />
       </Head>
 
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" style={{ flexGrow: 1 }}>
-            Flashcard SaaS
+            FlashCards Gen
           </Typography>
           <SignedOut>
             <Button color="inherit" href="/sign-in">Login</Button>
@@ -33,12 +60,14 @@ export default function Home() {
           my: 4,
           pt: 8, // Add padding top to account for AppBar height
         }}>
-          <Typography variant="h2" align="center" gutterBottom>Welcome to Flashcard SaaS</Typography>
+          <Typography variant="h2" align="center" gutterBottom>Welcome to FlashCards Gen</Typography>
           <Typography variant="h5" align="center" gutterBottom>
             The easiest way to generate flashcards from your texts
           </Typography>
           <Button variant="contained" color="primary" sx={{ mt: 2 }}>
-            Get Started
+            <Link href="/generate" passHref style={{ textDecoration: 'none', color: 'white' }}>
+              Get Started
+            </Link>
           </Button>
         </Box>
         <Box sx={{
@@ -117,7 +146,11 @@ export default function Home() {
                 {''}
                 Unlimited flashcards and storage with priority support
               </Typography>
-              <Button variant="contained" color="primary" sx={{ mt: 2 }}>
+              <Button 
+              variant="contained" 
+              color="primary" 
+              sx={{ mt: 2 }}
+              onClick={handleSubmit}>
                 Choose Pro
               </Button>
             </Box>

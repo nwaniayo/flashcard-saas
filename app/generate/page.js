@@ -262,7 +262,7 @@ export default function Generate() {
                 boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
               }}>
                 <TextField
-                  label="Enter text"
+                  label="Enter flashcard topic"
                   multiline
                   fullWidth
                   rows={4}
@@ -313,8 +313,51 @@ export default function Generate() {
             </Box>
 
             {loading ? (
-              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 4 }}>
-                <CircularProgress />
+              <Box sx={{ 
+                display: 'flex', 
+                flexDirection: 'column',
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                mt: 4,
+                height: '200px',
+              }}>
+                <CircularProgress
+                  size={60}
+                  thickness={4}
+                  sx={{
+                    color: 'primary.main',
+                    animation: 'pulse 1.5s ease-in-out infinite',
+                    '@keyframes pulse': {
+                      '0%': {
+                        transform: 'scale(0.8)',
+                        //boxShadow: '0 0 0 0 rgba(100, 0, 228, 0.7)',
+                      },
+                      '70%': {
+                        transform: 'scale(1)',
+                        //boxShadow: '0 0 0 10px rgba(100, 0, 228, 0)',
+                      },
+                      '100%': {
+                        transform: 'scale(0.8)',
+                       // boxShadow: '0 0 0 0 rgba(100, 0, 228, 0)',
+                      },
+                    },
+                  }}
+                />
+                <Typography 
+                  variant="h6" 
+                  sx={{ 
+                    mt: 2, 
+                    color: 'primary.main',
+                    textShadow: '0 0 10px rgba(100, 0, 228, 0.5)',
+                    animation: 'fadeInOut 1.5s ease-in-out infinite',
+                    '@keyframes fadeInOut': {
+                      '0%, 100%': { opacity: 0.6 },
+                      '50%': { opacity: 1 },
+                    },
+                  }}
+                >
+                  Generating Flashcards...
+                </Typography>
               </Box>
             ) : (
               flashcards.length > 0 && (
@@ -327,7 +370,7 @@ export default function Generate() {
                           background: 'linear-gradient(145deg, rgba(31,43,77,0.8) 0%, rgba(20,28,58,0.9) 100%)',
                           backdropFilter: 'blur(10px)',
                           border: '1px solid rgba(255,255,255,0.1)',
-                          boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+                          //boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
                           transition: 'all 0.3s ease',
                           '&:hover': {
                             transform: 'translateY(-5px)',

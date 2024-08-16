@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import getStripe from "@/utils/get-stripe";
 import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
-import { Button, Container, AppBar, Typography, Toolbar, Box, Grid, Link, Paper, ThemeProvider, createTheme, CssBaseline, Drawer, List, ListItem, ListItemText, Divider, IconButton } from "@mui/material";
+import { Button, Container, AppBar, Typography, Toolbar, Box, Grid, Link, Paper, ThemeProvider, createTheme, CssBaseline, Drawer, List, ListItem, ListItemText, Divider, IconButton, CircularProgress } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import Head from "next/head";
 
@@ -35,6 +35,64 @@ const theme = createTheme({
 });
 
 const drawerWidth = 240;
+
+const LoadingScreen = () => (
+  <Box
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100%',
+      minHeight: '200px',
+      background: 'linear-gradient(145deg, rgba(31,43,77,0.6) 0%, rgba(20,28,58,0.8) 100%)',
+      backdropFilter: 'blur(10px)',
+      borderRadius: '16px',
+      border: '1px solid rgba(255,255,255,0.1)',
+      boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+      padding: '20px',
+    }}
+  >
+    <CircularProgress
+      size={60}
+      thickness={4}
+      sx={{
+        color: '#6400e4',
+        animation: 'pulse 1.5s ease-in-out infinite',
+        '@keyframes pulse': {
+          '0%': {
+            opacity: 0.6,
+            transform: 'scale(0.98)',
+          },
+          '50%': {
+            opacity: 1,
+            transform: 'scale(1)',
+          },
+          '100%': {
+            opacity: 0.6,
+            transform: 'scale(0.98)',
+          },
+        },
+      }}
+    />
+    <Typography
+      variant="h6"
+      sx={{
+        mt: 2,
+        color: 'white',
+        textShadow: '0 0 10px rgba(100, 0, 228, 0.5)',
+        animation: 'fadeInOut 1.5s ease-in-out infinite',
+        '@keyframes fadeInOut': {
+          '0%': { opacity: 0.6 },
+          '50%': { opacity: 1 },
+          '100%': { opacity: 0.6 },
+        },
+      }}
+    >
+      Generating Flashcards...
+    </Typography>
+  </Box>
+);
 
 export default function Home() {
   const [drawerOpen, setDrawerOpen] = useState(false);

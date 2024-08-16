@@ -64,7 +64,54 @@ export default function Flashcards() {
   const handleCardClick = (id) => {
     router.push(`/flashcard?id=${id}`);
   };
-
+  const CustomCircularProgress = () => (
+    <Box sx={{ 
+      display: 'flex', 
+      flexDirection: 'column',
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      mt: 4,
+      height: '200px',
+    }}>
+      <CircularProgress
+        size={60}
+        thickness={4}
+        sx={{
+          color: 'primary.main',
+          animation: 'pulse 1.5s ease-in-out infinite',
+          '@keyframes pulse': {
+            '0%': {
+              transform: 'scale(0.8)',
+              //boxShadow: '0 0 0 0 rgba(100, 0, 228, 0.7)',
+            },
+            '70%': {
+              transform: 'scale(1)',
+              //boxShadow: '0 0 0 10px rgba(100, 0, 228, 0)',
+            },
+            '100%': {
+              transform: 'scale(0.8)',
+             // boxShadow: '0 0 0 0 rgba(100, 0, 228, 0)',
+            },
+          },
+        }}
+      />
+      <Typography 
+        variant="h6" 
+        sx={{ 
+          mt: 2, 
+          color: 'primary.main',
+          textShadow: '0 0 10px rgba(100, 0, 228, 0.5)',
+          animation: 'fadeInOut 1.5s ease-in-out infinite',
+          '@keyframes fadeInOut': {
+            '0%, 100%': { opacity: 0.6 },
+            '50%': { opacity: 1 },
+          },
+        }}
+      >
+        Retrieving Collection...
+      </Typography>
+    </Box>
+  );
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
   };
@@ -194,7 +241,7 @@ export default function Flashcards() {
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
               <Typography variant="h4" sx={{ mb: 4 }}>Your Flashcard Collections</Typography>
               {loading ? (
-                <CircularProgress />
+                <CustomCircularProgress />
               ) : (
                 <Grid container spacing={3}>
                   {flashcards.map((flashcard) => (

@@ -1,40 +1,58 @@
+'use client'
 import { SignUp } from '@clerk/nextjs';
-import { Container, Typography, Button, AppBar, Toolbar, Box } from '@mui/material';
+import { Container, Typography, Button, AppBar, Toolbar, Box, ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 import Link from 'next/link';
+
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#6400e4',
+    },
+    background: {
+      default: '#141c3a',
+      paper: '#1f2b4d',
+    },
+  },
+});
 
 export default function SignUpPage() {
     return (
-        <>
-            <AppBar position="static">
-                <Toolbar>
-                    <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                    <Link href="/" passHref style={{ textDecoration: 'none', color: 'white' }}>
-                    FlashCards Gen
-                    </Link>
-                    </Typography>
-                    <Button color="inherit">
-                        <Link href="/sign-in" passHref style={{ textDecoration: 'none', color: 'white' }}>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                <AppBar position="sticky" sx={{
+                    background: 'linear-gradient(90deg, #141c3a 0%, #1f2b4d 100%)',
+                    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                }}>
+                    <Toolbar>
+                        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                            <Link href="/" passHref style={{ textDecoration: 'none', color: 'white' }}>
+                                FlashCards Gen
+                            </Link>
+                        </Typography>
+                        <Button color="inherit" component={Link} href="/sign-in">
                             Login
-                        </Link>
-                    </Button>
-                    <Button color="inherit">
-                        <Link href="/sign-up" passHref style={{ textDecoration: 'none', color: 'white' }}>
+                        </Button>
+                        <Button color="inherit" component={Link} href="/sign-up">
                             Sign Up
-                        </Link>
-                    </Button>
-                </Toolbar>
-            </AppBar>
-            <Container maxWidth="sm">
-                <Box
-                    display='flex'
-                    flexDirection='column'
-                    justifyContent='center'
-                    alignItems='center'>
-
-                    
-                    <SignUp />
-                </Box>
-            </Container>
-        </>
+                        </Button>
+                    </Toolbar>
+                </AppBar>
+                <Container maxWidth="sm" sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        p: 4,
+                        backgroundColor: 'background.paper',
+                        borderRadius: 2,
+                        boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                    }}>
+                        <SignUp />
+                    </Box>
+                </Container>
+            </Box>
+        </ThemeProvider>
     )
 }

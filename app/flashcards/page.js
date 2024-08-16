@@ -3,7 +3,7 @@
 import { useUser } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
 import { db } from '@/firebase';
-import { collection, doc, getDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import { Toolbar, Container, Grid, Typography, Card, CardActionArea, CardContent, CircularProgress, Box, ThemeProvider, createTheme, CssBaseline, Drawer, List, ListItem, ListItemText, Divider, IconButton, AppBar, Button, Link } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useRouter } from 'next/navigation';
@@ -112,27 +112,82 @@ export default function Flashcards() {
             open={drawerOpen}
             onClose={handleDrawerToggle}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true,
             }}
             sx={{
               '& .MuiDrawer-paper': {
-                width: drawerWidth,
                 boxSizing: 'border-box',
-                backgroundColor: 'background.paper',
+                width: drawerWidth,
+                background: 'linear-gradient(135deg, rgba(31, 43, 77, 0.7) 0%, rgba(20, 28, 58, 0.7) 100%)',
+                backdropFilter: 'blur(10px)',
+                borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+                boxShadow: '0 0 15px rgba(0, 0, 0, 0.3), inset 0 0 30px rgba(255, 255, 255, 0.05)',
+                '&::before': {
+                  content: '""',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%)',
+                  pointerEvents: 'none',
+                },
               },
             }}
           >
-            <Toolbar />
+            <Toolbar sx={{ 
+              background: 'linear-gradient(180deg, rgba(31, 43, 77, 0.9) 0%, rgba(20, 28, 58, 0.9) 100%)',
+              borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+            }} />
             <Box sx={{ overflow: 'auto' }}>
               <List>
-                <ListItem button component={Link} href="/flashcards">
-                  <ListItemText primary="Collections" />
-                </ListItem>
-                <ListItem button component={Link} href="/generate">
-                  <ListItemText primary="Generate" />
-                </ListItem>
+                {['Collections', 'Generate'].map((text, index) => (
+                  <ListItem 
+                    key={text} 
+                    button 
+                    component={Link} 
+                    href={index === 0 ? "/flashcards" : "/generate"}
+                    sx={{
+                      color: 'white',
+                      transition: 'all 0.3s ease',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      '&:hover': {
+                        backgroundColor: 'rgba(20, 28, 58, 0.8)', // Darker background color
+                        '&::after': {
+                          opacity: 1,
+                        },
+                      },
+                      '&::after': {
+                        content: '""',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%)',
+                        opacity: 0,
+                        transition: 'opacity 0.3s ease',
+                        pointerEvents: 'none',
+                      },
+                    }}
+                  >
+                    <ListItemText 
+                      primary={text} 
+                      primaryTypographyProps={{ 
+                        fontWeight: 'medium',
+                        sx: {
+                          transition: 'all 0.3s ease',
+                          '&:hover': {
+                            textShadow: '0 0 10px rgba(255, 255, 255, 0.3)',
+                          },
+                        }
+                      }} 
+                    />
+                  </ListItem>
+                ))}
               </List>
-              <Divider />
+              <Divider sx={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }} />
             </Box>
           </Drawer>
           <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

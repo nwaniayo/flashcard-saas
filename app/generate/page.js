@@ -169,35 +169,98 @@ export default function Generate() {
             open={drawerOpen}
             onClose={handleDrawerToggle}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true,
             }}
             sx={{
               '& .MuiDrawer-paper': {
-                width: drawerWidth,
                 boxSizing: 'border-box',
-                backgroundColor: 'background.paper',
+                width: drawerWidth,
+                background: 'linear-gradient(135deg, rgba(31, 43, 77, 0.7) 0%, rgba(20, 28, 58, 0.7) 100%)',
+                backdropFilter: 'blur(10px)',
+                borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+                boxShadow: '0 0 15px rgba(0, 0, 0, 0.3), inset 0 0 30px rgba(255, 255, 255, 0.05)',
+                '&::before': {
+                  content: '""',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%)',
+                  pointerEvents: 'none',
+                },
               },
             }}
           >
-            <Toolbar />
+            <Toolbar sx={{ 
+              background: 'linear-gradient(180deg, rgba(31, 43, 77, 0.9) 0%, rgba(20, 28, 58, 0.9) 100%)',
+              borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+            }} />
             <Box sx={{ overflow: 'auto' }}>
               <List>
-                <ListItem button component={Link} href="/flashcards">
-                  <ListItemText primary="Collections" />
-                </ListItem>
-                <ListItem button component={Link} href="/generate">
-                  <ListItemText primary="Generate" />
-                </ListItem>
+                {['Collections', 'Generate'].map((text, index) => (
+                  <ListItem 
+                    key={text} 
+                    button 
+                    component={Link} 
+                    href={index === 0 ? "/flashcards" : "/generate"}
+                    sx={{
+                      color: 'white',
+                      transition: 'all 0.3s ease',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      '&:hover': {
+                        backgroundColor: 'rgba(20, 28, 58, 0.8)', // Darker background color
+                        '&::after': {
+                          opacity: 1,
+                        },
+                      },
+                      '&::after': {
+                        content: '""',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%)',
+                        opacity: 0,
+                        transition: 'opacity 0.3s ease',
+                        pointerEvents: 'none',
+                      },
+                    }}
+                  >
+                    <ListItemText 
+                      primary={text} 
+                      primaryTypographyProps={{ 
+                        fontWeight: 'medium',
+                        sx: {
+                          transition: 'all 0.3s ease',
+                          '&:hover': {
+                            textShadow: '0 0 10px rgba(255, 255, 255, 0.3)',
+                          },
+                        }
+                      }} 
+                    />
+                  </ListItem>
+                ))}
               </List>
-              <Divider />
+              <Divider sx={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }} />
             </Box>
           </Drawer>
           <Container maxWidth="md">
             <Box sx={{ mt: 4, mb: 6, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Typography variant="h4" sx={{ mb: 4 }}>
+              <Typography variant="h4" sx={{ mb: 4, color: 'white', textShadow: '0 0 10px rgba(100, 0, 228, 0.5)' }}>
                 Generate Flashcards
               </Typography>
-              <Paper sx={{ p: 3, width: '100%', borderRadius: 2, boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}>
+              <Paper sx={{ 
+                p: 3, 
+                width: '100%', 
+                borderRadius: 2, 
+                background: 'linear-gradient(145deg, rgba(31,43,77,0.6) 0%, rgba(20,28,58,0.8) 100%)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+              }}>
                 <TextField
                   label="Enter text"
                   multiline
@@ -206,9 +269,44 @@ export default function Generate() {
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                   variant="outlined"
-                  sx={{ mb: 2 }}
+                  sx={{
+                    mb: 2,
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': {
+                        borderColor: 'rgba(255,255,255,0.3)',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: 'rgba(255,255,255,0.5)',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: '#6400e4',
+                      },
+                    },
+                    '& .MuiInputLabel-root': {
+                      color: 'rgba(255,255,255,0.7)',
+                    },
+                    '& .MuiInputBase-input': {
+                      color: 'white',
+                    },
+                  }}
                 />
-                <Button variant="contained" fullWidth color="primary" sx={{ mt: 2 }} onClick={handleSubmit}>
+                <Button 
+                  variant="contained" 
+                  fullWidth 
+                  color="primary" 
+                  sx={{ 
+                    mt: 2,
+                    background: 'linear-gradient(45deg, #6400e4 30%, #8a29ff 90%)',
+                    boxShadow: '0 3px 5px 2px rgba(100, 0, 228, .3)',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      background: 'linear-gradient(45deg, #5600c4 30%, #7a19ef 90%)',
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 6px 10px 4px rgba(100, 0, 228, .4)',
+                    },
+                  }} 
+                  onClick={handleSubmit}
+                >
                   Generate
                 </Button>
               </Paper>
@@ -298,10 +396,21 @@ export default function Generate() {
               )
             )}
 
-            <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>Save Flashcards</DialogTitle>
+            <Dialog 
+              open={open} 
+              onClose={handleClose}
+              PaperProps={{
+                style: {
+                  background: 'linear-gradient(145deg, rgba(31,43,77,0.8) 0%, rgba(20,28,58,0.9) 100%)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+                },
+              }}
+            >
+              <DialogTitle sx={{ color: 'white', textShadow: '0 0 10px rgba(100, 0, 228, 0.5)' }}>Save Flashcards</DialogTitle>
               <DialogContent>
-                <DialogContentText>
+                <DialogContentText sx={{ color: 'rgba(255,255,255,0.7)' }}>
                   Please enter a name for the collection
                 </DialogContentText>
                 <TextField
@@ -313,14 +422,43 @@ export default function Generate() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   variant="outlined"
-                  sx={{ mb: 2 }}
+                  sx={{
+                    mb: 2,
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': {
+                        borderColor: 'rgba(255,255,255,0.3)',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: 'rgba(255,255,255,0.5)',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: '#6400e4',
+                      },
+                    },
+                    '& .MuiInputLabel-root': {
+                      color: 'rgba(255,255,255,0.7)',
+                    },
+                    '& .MuiInputBase-input': {
+                      color: 'white',
+                    },
+                  }}
                 />   
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleClose} color="primary">
+                <Button onClick={handleClose} sx={{ color: 'rgba(255,255,255,0.7)' }}>
                   Cancel
                 </Button>
-                <Button onClick={saveFlashCards} color="primary">
+                <Button 
+                  onClick={saveFlashCards} 
+                  sx={{
+                    color: 'white',
+                    background: 'linear-gradient(45deg, #6400e4 30%, #8a29ff 90%)',
+                    boxShadow: '0 3px 5px 2px rgba(100, 0, 228, .3)',
+                    '&:hover': {
+                      background: 'linear-gradient(45deg, #5600c4 30%, #7a19ef 90%)',
+                    },
+                  }}
+                >
                   Save
                 </Button>
               </DialogActions>
